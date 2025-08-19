@@ -157,17 +157,17 @@ $assignments = $stmt->fetchAll();
                     <div class="assignment-card">
                         <div class="assignment-header">
                             <div>
-                                <div class="assignment-title"><?= htmlspecialchars($assignment['title']) ?></div>
+                                <div class="assignment-title"><?= htmlspecialchars($assignment['title'] ?? '') ?></div>
                                 <div class="assignment-meta">
-                                    <?= htmlspecialchars($assignment['subject_code']) ?> - Section <?= htmlspecialchars($assignment['section']) ?> | 
-                                    Due: <?= date('M j, Y g:i A', strtotime($assignment['due_date'])) ?> | 
-                                    <?= htmlspecialchars($assignment['points']) ?> points
+                                    <?= htmlspecialchars($assignment['subject_code'] ?? '') ?> - Section <?= htmlspecialchars($assignment['section'] ?? '') ?> | 
+                                    Due: <?= isset($assignment['due_date']) ? date('M j, Y g:i A', strtotime($assignment['due_date'])) : 'Not set' ?> | 
+                                    <?= isset($assignment['points']) ? htmlspecialchars($assignment['points']) : '0' ?> points
                                 </div>
                             </div>
                             <div>
                                 <?php
                                 $now = new DateTime();
-                                $due = new DateTime($assignment['due_date']);
+                                $due = isset($assignment['due_date']) ? new DateTime($assignment['due_date']) : $now;
                                 if ($due < $now) {
                                     echo '<span class="status-badge status-overdue">Overdue</span>';
                                 } elseif ($due->diff($now)->days <= 3) {
@@ -179,7 +179,7 @@ $assignments = $stmt->fetchAll();
                             </div>
                         </div>
                         <div style="margin-bottom: 1rem; color: #64748b;">
-                            <?= htmlspecialchars($assignment['description']) ?>
+                            <?= htmlspecialchars($assignment['description'] ?? '') ?>
                         </div>
                         <div style="display: flex; justify-content: space-between; align-items: center;">
                             <div style="color: #64748b; font-size: 0.875rem;">
