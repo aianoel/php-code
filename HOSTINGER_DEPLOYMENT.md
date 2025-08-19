@@ -13,11 +13,17 @@ MySQL Password: 8uJs293cjJB
 - Make sure your GitHub repository is up to date
 - Download a ZIP of your repository or use Git to clone it locally
 
-### 2. Database Setup
-- Log in to your Hostinger control panel
-- Navigate to the MySQL Databases section
-- The database has already been created with the credentials above
-- Import your database schema using phpMyAdmin:
+### 2. Database Migration
+- **Option 1: Using the Automated Migration Script (Recommended)**
+  - Update local database credentials in `migrate-to-hostinger.php` if needed
+  - Upload the script to your Hostinger server
+  - Run the script via browser: `https://yourdomain.com/migrate-to-hostinger.php`
+  - Verify the migration output for successful completion
+
+- **Option 2: Manual Database Import**
+  - Log in to your Hostinger control panel
+  - Navigate to the MySQL Databases section
+  - Access phpMyAdmin for the `u870495195_admission` database
   - Go to phpMyAdmin in your Hostinger control panel
   - Select the `u870495195_admission` database
   - Click on the "Import" tab
