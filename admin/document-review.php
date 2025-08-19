@@ -518,7 +518,7 @@ try {
 
                 <?php if (isset($message)): ?>
                     <div class="alert <?= strpos($message, 'Error') !== false ? 'alert-error' : 'alert-success' ?>">
-                        <?= htmlspecialchars($message) ?>
+                        <?= htmlspecialchars($message ?? '') ?>
                     </div>
                 <?php endif; ?>
 
@@ -564,9 +564,9 @@ try {
                                 <div class="document-item">
                                     <div class="document-header">
                                         <div>
-                                            <div class="document-title"><?= htmlspecialchars($doc['title']) ?></div>
+                                            <div class="document-title"><?= htmlspecialchars($doc['title'] ?? '') ?></div>
                                             <div style="font-size: 0.875rem; color: #6b7280; margin-top: 0.25rem;">
-                                                <?= htmlspecialchars($doc['document_type_name']) ?>
+                                                <?= htmlspecialchars($doc['document_type_name'] ?? '') ?>
                                             </div>
                                         </div>
                                         <div style="display: flex; gap: 0.5rem;">
@@ -582,7 +582,7 @@ try {
                                     <div class="document-meta">
                                         <div class="meta-item">
                                             <i class="fas fa-user"></i>
-                                            <span>Submitted by: <?= htmlspecialchars($doc['submitted_by_name']) ?></span>
+                                            <span>Submitted by: <?= htmlspecialchars($doc['submitted_by_name'] ?? '') ?></span>
                                         </div>
                                         <div class="meta-item">
                                             <i class="fas fa-calendar"></i>
@@ -597,23 +597,23 @@ try {
                                         <?php if ($doc['file_name']): ?>
                                             <div class="meta-item">
                                                 <i class="fas fa-paperclip"></i>
-                                                <span><?= htmlspecialchars($doc['file_name']) ?></span>
+                                                <span><?= htmlspecialchars($doc['file_name'] ?? '') ?></span>
                                             </div>
                                         <?php endif; ?>
                                     </div>
                                     
                                     <?php if ($doc['description']): ?>
                                         <div style="margin-bottom: 1rem; color: #4b5563;">
-                                            <?= nl2br(htmlspecialchars($doc['description'])) ?>
+                                            <?= nl2br(htmlspecialchars($doc['description'] ?? '')) ?>
                                         </div>
                                     <?php endif; ?>
                                     
                                     <?php if ($doc['review_notes']): ?>
                                         <div style="background: #f8fafc; padding: 1rem; border-radius: 0.5rem; margin-bottom: 1rem;">
                                             <strong>Review Notes:</strong>
-                                            <div style="margin-top: 0.5rem;"><?= nl2br(htmlspecialchars($doc['review_notes'])) ?></div>
+                                            <div style="margin-top: 0.5rem;"><?= nl2br(htmlspecialchars($doc['review_notes'] ?? '')) ?></div>
                                             <div style="font-size: 0.875rem; color: #6b7280; margin-top: 0.5rem;">
-                                                Reviewed by: <?= htmlspecialchars($doc['reviewed_by_name']) ?> on <?= date('M j, Y', strtotime($doc['reviewed_at'])) ?>
+                                                Reviewed by: <?= htmlspecialchars($doc['reviewed_by_name'] ?? '') ?> on <?= date('M j, Y', strtotime($doc['reviewed_at'] ?? '')) ?>
                                             </div>
                                         </div>
                                     <?php endif; ?>
@@ -672,8 +672,8 @@ try {
                                     <tbody>
                                         <?php foreach ($document_types as $type): ?>
                                             <tr style="border-bottom: 1px solid #f3f4f6;">
-                                                <td style="padding: 1rem; font-weight: 600;"><?= htmlspecialchars($type['name']) ?></td>
-                                                <td style="padding: 1rem; color: #6b7280;"><?= htmlspecialchars($type['description']) ?></td>
+                                                <td style="padding: 1rem; font-weight: 600;"><?= htmlspecialchars($type['name'] ?? '') ?></td>
+                                                <td style="padding: 1rem; color: #6b7280;"><?= htmlspecialchars($type['description'] ?? '') ?></td>
                                                 <td style="padding: 1rem;">
                                                     <span style="background: #f3f4f6; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem;">
                                                         <?= ucfirst($type['required_for_role']) ?>

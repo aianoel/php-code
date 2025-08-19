@@ -167,9 +167,9 @@ foreach ($classes as $class) {
                 <p style="color: #64748b; margin-bottom: 1rem;">Click on a class to assign schedule</p>
                 <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem;">
                     <?php foreach ($unscheduledClasses as $class): ?>
-                        <div class="class-card" onclick="openScheduleModal(<?= $class['id'] ?>, '<?= htmlspecialchars($class['subject_name']) ?>', '<?= htmlspecialchars($class['section']) ?>')">
-                            <strong><?= htmlspecialchars($class['subject_name']) ?></strong> - Section <?= htmlspecialchars($class['section']) ?><br>
-                            <small><?= htmlspecialchars($class['teacher_first'] . ' ' . $class['teacher_last']) ?> • <?= $class['student_count'] ?> students</small>
+                        <div class="class-card" onclick="openScheduleModal(<?= $class['id'] ?>, '<?= htmlspecialchars($class['subject_name'] ?? '') ?>', '<?= htmlspecialchars($class['section'] ?? '') ?>')">
+                            <strong><?= htmlspecialchars($class['subject_name'] ?? '') ?></strong> - Section <?= htmlspecialchars($class['section'] ?? '') ?><br>
+                            <small><?= htmlspecialchars(($class['teacher_first'] ?? '') . ' ' . ($class['teacher_last'] ?? '')) ?> • <?= $class['student_count'] ?? 0 ?> students</small>
                         </div>
                     <?php endforeach; ?>
                 </div>
@@ -193,13 +193,13 @@ foreach ($classes as $class) {
                         <div class="schedule-cell" onclick="openTimeSlotModal('<?= $day ?>', '<?= $time ?>')">
                             <?php if (isset($schedule[$day][$time])): ?>
                                 <?php $class = $schedule[$day][$time]; ?>
-                                <div class="class-block" onclick="event.stopPropagation(); openScheduleModal(<?= $class['id'] ?>, '<?= htmlspecialchars($class['subject_name']) ?>', '<?= htmlspecialchars($class['section']) ?>')">
+                                <div class="class-block" onclick="event.stopPropagation(); openScheduleModal(<?= $class['id'] ?>, '<?= htmlspecialchars($class['subject_name'] ?? '') ?>', '<?= htmlspecialchars($class['section'] ?? '') ?>')">
                                     <div class="class-info">
-                                        <?= htmlspecialchars($class['subject_code']) ?><br>
-                                        Section <?= htmlspecialchars($class['section']) ?>
+                                        <?= htmlspecialchars($class['subject_code'] ?? '') ?><br>
+                                        Section <?= htmlspecialchars($class['section'] ?? '') ?>
                                     </div>
                                     <div class="class-teacher">
-                                        <?= htmlspecialchars($class['teacher_first'] . ' ' . $class['teacher_last']) ?>
+                                        <?= htmlspecialchars(($class['teacher_first'] ?? '') . ' ' . ($class['teacher_last'] ?? '')) ?>
                                     </div>
                                 </div>
                             <?php endif; ?>
@@ -229,7 +229,7 @@ foreach ($classes as $class) {
                         <select name="schedule_day" id="modal_day" class="form-control" required>
                             <option value="">Select Day</option>
                             <?php foreach ($days as $day): ?>
-                                <option value="<?= $day ?>"><?= $day ?></option>
+                                <option value="<?= $day ?>"><?= htmlspecialchars($day ?? '') ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
@@ -260,8 +260,8 @@ foreach ($classes as $class) {
 
     <script>
         function openScheduleModal(classId, subjectName, section) {
-            document.getElementById('modal_class_id').value = classId;
-            document.getElementById('modal_class_info').value = subjectName + ' - Section ' + section;
+            document.getElementById('modal_class_id').value = classId || '';
+            document.getElementById('modal_class_info').value = subjectName || '' + ' - Section ' + (section || '');
             
             // Fetch existing schedule data for this class if available
             fetch('get_class_schedule.php?class_id=' + classId)
